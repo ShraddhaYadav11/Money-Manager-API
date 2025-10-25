@@ -31,10 +31,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
        String email=null;
        String jwt=null;
 
-       if(authHeader !=null && authHeader.startsWith("Bearer ")){
-          jwt=authHeader.substring(7);
-          email=jwtUtil.extractUsername(jwt);
-       }
+    //    if(authHeader !=null && authHeader.startsWith("Bearer ")){
+    //       jwt=authHeader.substring(7);
+    //       email=jwtUtil.extractUsername(jwt);
+    //    }
+
+       if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        jwt = authHeader.substring(7);
+        try {
+            email = jwtUtil.extractUsername(jwt);  // ✅ Try-catch add karo
+        } catch (Exception e) {
+            // JWT expired/invalid - ignore and continue
+            System.err.println("JWT extraction error: " + e.getMessage());
+        }
+    }
 
        if(email!=null && SecurityContextHolder.getContext().getAuthentication()==null){
           UserDetails userDetails=this.userDetailsService.loadUserByUsername(email);
