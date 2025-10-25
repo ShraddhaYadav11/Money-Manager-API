@@ -3,10 +3,10 @@ package in.shaddha.moneymanager.service;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +18,6 @@ import in.shaddha.moneymanager.entity.ProfileEntity;
 import in.shaddha.moneymanager.repository.ProfileRepository;
 import in.shaddha.moneymanager.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +42,7 @@ public class ProfileService {
         newprofile.setActivationToken(UUID.randomUUID().toString());
         newprofile=profileRepository.save(newprofile);
         //Send Activation Email
-        String activationLink=activationURL+"/api/v1.0/activate?token=" +newprofile.getActivationToken();
+        String activationLink=activationURL+"/api/v1.0/activation?token=" +newprofile.getActivationToken();
         String subject="Acivate your money Manager";
         String body="Click on the following link to activate your account: "+activationLink;
         emailService.sendEmail(newprofile.getEmail(), subject, body);
