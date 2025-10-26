@@ -15,4 +15,11 @@ public class HomeController{
     public String healthCheck(){
         return "Appliction is running";
     }
+
+    @GetMapping("/test-cors")
+    public String testCors() {
+             return "CORS is working!";
+        }
+
 }
+
