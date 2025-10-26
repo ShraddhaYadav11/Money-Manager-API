@@ -48,14 +48,27 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // @Bean
+    // public CorsConfigurationSource configurationSource(){
+    //     CorsConfiguration configuration=new CorsConfiguration();
+    //     configuration.setAllowedOriginPatterns(List.of("*"));
+    //     configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+    //     configuration.setAllowedHeaders(List.of("Authorization","Content-Type","Accept"));
+    //     configuration.setAllowCredentials(true);
+    //     UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", configuration);
+    //     return source;
+    // }
+
     @Bean
     public CorsConfigurationSource configurationSource(){
-        CorsConfiguration configuration=new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("*"));
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:5173")); // your frontend URL
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type","Accept"));
-        configuration.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
+        configuration.setAllowCredentials(true); // allow sending cookies or Authorization header
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
