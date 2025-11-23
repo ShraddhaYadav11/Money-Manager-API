@@ -24,17 +24,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import in.shaddha.moneymanager.security.JwtRequestFilter;
 import in.shaddha.moneymanager.service.AppUserdetailsService;
 import lombok.RequiredArgsConstructor;
-import cors from "cors";
+
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    app.use(cors({
-        origin: "*",     // For testing
-        methods: "GET,POST,PUT,DELETE",
-        credentials: true
-    }));
+    
 
     private final AppUserdetailsService appUserdetailsService;
     private final JwtRequestFilter jwtRequestFilter;
@@ -69,13 +65,13 @@ public class SecurityConfig {
     //     return source;
     // }
 
-    @Bean
+   @Bean
     public CorsConfigurationSource configurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of( "http://localhost:5173")); // your frontend URL
+        configuration.setAllowedOriginPatterns(List.of("*"));  // FIXED 🔥
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization","Content-Type","Accept"));
-        configuration.setAllowCredentials(true); // allow sending cookies or Authorization header
+        configuration.setAllowedHeaders(List.of("*")); 
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
