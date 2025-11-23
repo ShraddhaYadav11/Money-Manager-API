@@ -24,10 +24,17 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import in.shaddha.moneymanager.security.JwtRequestFilter;
 import in.shaddha.moneymanager.service.AppUserdetailsService;
 import lombok.RequiredArgsConstructor;
+import cors from "cors";
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    app.use(cors({
+        origin: "*",     // For testing
+        methods: "GET,POST,PUT,DELETE",
+        credentials: true
+    }));
 
     private final AppUserdetailsService appUserdetailsService;
     private final JwtRequestFilter jwtRequestFilter;
