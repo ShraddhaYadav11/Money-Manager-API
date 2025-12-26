@@ -39,7 +39,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
          httpSecurity.cors(Customizer.withDefaults())
          .csrf(AbstractHttpConfigurer::disable)
-         .authorizeHttpRequests(auth->auth.requestMatchers("/status","/health","/register","/activation","/login").permitAll()
+         .authorizeHttpRequests(auth->auth.requestMatchers("/status","/health","/register","/activation","/login","/profile").permitAll()
          .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
            .anyRequest().authenticated())
            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -39,6 +39,7 @@ public class ProfileService {
         
 
         ProfileEntity newprofile=toEntity(profileDTO);
+        newprofile.setIsActive(true);
         newprofile.setActivationToken(UUID.randomUUID().toString());
         newprofile=profileRepository.save(newprofile);
         //Send Activation Email
@@ -99,15 +100,13 @@ public class ProfileService {
 
     }
 
-    public ProfileDTO getPublicProfile(String email){
-
-        ProfileEntity currentUser=null;
-        if(email==null){
-            getCurrentProfile();
-
-        }else{
-           currentUser= profileRepository.findByEmail(email)
-              .orElseThrow(()->new UsernameNotFoundException("Profile not found with email :"+ email));
+    public ProfileDTO getPublicProfile(String email) {
+        ProfileEntity currentUser = null;
+        if (email == null) {
+            currentUser = getCurrentProfile();
+        }else {
+            currentUser = profileRepository.findByEmail(email)
+                    .orElseThrow(() -> new UsernameNotFoundException("Profile not found with email: " + email));
         }
 
         return ProfileDTO.builder()
